@@ -524,6 +524,13 @@ describe Admin::ContentController do
         article.body.should == 'foo'
         article.extended.should == 'bar<!--more-->baz'
       end
+      it 'should merge the current article with the other article' do
+         other_article = Factory(:article)
+         other_id = other_article.id
+         get :merge, 'merge_with' => other_id, 'current_id' => @article.id
+         id = @article.id.to_s
+         response.should redirect_to('/admin/content/edit/' << id)
+      end 
 
       it 'should delete draft about this article if update' do
         article = @article

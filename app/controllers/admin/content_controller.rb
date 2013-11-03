@@ -5,7 +5,18 @@ class Admin::ContentController < Admin::BaseController
   layout "administration", :except => [:show, :autosave]
 
   cache_sweeper :blog_sweeper
-
+  def merge
+    current_article = Article.find(params[:current_id])
+    other_article = Article.find(params[:merge_with])
+    if current_article == nil or other_article == nil 
+      redirect_to "/admin/content/edit/#{params[:current_id]}"
+      flash[:error] = _("Error, you are not allowed to perform this action")
+    end
+    current_article.merge_with(other_article)
+    #x = current_article.body
+    redirect_to "/admin/content/edit/#{params[:current_id]}"
+    #flash[:notice] = "#{x}That's right babe"
+  end
   def auto_complete_for_article_keywords
     @items = Tag.find_with_char params[:article][:keywords].strip
     render :inline => "<%= raw auto_complete_result @items, 'name' %>"
