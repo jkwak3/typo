@@ -5,7 +5,7 @@
   <%= render :partial => "form" %>
   
 <% end %>
-<div <%= "style='display: none;'" if request.fullpath == '/admin/content/new' %>>
+<div <%= "style='display: none;'" if request.fullpath == '/admin/content/new' or current_user.admin? == false %>>
 <h4><%= _("Merge Articles") %></h4>
 <%= form_tag :action => 'merge' do %>
   <input type="hidden" name="current_id" id="current_id" value="<%= params[:id] %>" />
