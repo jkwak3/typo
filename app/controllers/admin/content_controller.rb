@@ -35,10 +35,12 @@ class Admin::ContentController < Admin::BaseController
   end
 
   def new
+    @mergable = false
     new_or_edit
   end
 
   def edit
+    @mergable = current_user.admin?
     @article = Article.find(params[:id])
     unless @article.access_by? current_user
       redirect_to :action => 'index'
