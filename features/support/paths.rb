@@ -22,6 +22,8 @@ module NavigationHelpers
       id = Article.find_by_title($1).id
       print id
       '/admin/content/edit/' << id.to_s
+    when /^the new page for categories$/
+      '/admin/categories/new'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
